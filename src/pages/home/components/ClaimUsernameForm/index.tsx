@@ -9,7 +9,7 @@ const claimUsernameFormSchema = z.object({
   username: z.string()
     .min(3, { message: 'O nome precisa ter no mínimo 3 caracteres.' })
     .regex(/^([a-z\\-]+)$/i, { message: 'O nome pode conter apenas letras e hífens.' })
-    .transform(username => username[0].toUpperCase().slice(-1) + username.toLowerCase().slice(1)),
+    .transform(username => username.charAt(0).toUpperCase() + username.slice(1).toLowerCase()),
 })
 
 type ClaimUsernameFormData = z.infer<typeof claimUsernameFormSchema>
@@ -39,8 +39,10 @@ export function ClaimUsernameForm() {
       </Form>
 
       <FormAnnotation>
-        <Text size="sm">
-          {errors.username ? errors.username.message : 'Digite o nome de usuário desejado.'}
+        <Text size="md">
+          {errors.username 
+            ? errors.username.message 
+            : ' '}
         </Text>
       </FormAnnotation>
     </>
